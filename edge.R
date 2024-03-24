@@ -78,7 +78,7 @@ save_qlf_results <- function(qlf_list, prefix="DGE_results") {
   }
 }
 
-# Assuming qlf_1, qlf_2, qlf_3, qlf_4 exist and are your qlf objects
+# Assuming qlf_1, qlf_2, qlf_3, qlf_4 exist and are my qlf objects
 # Generate the names of these qlf objects
 qlf_names <- paste("qlf_", 1:4, sep="")
 
