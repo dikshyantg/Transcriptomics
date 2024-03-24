@@ -30,8 +30,17 @@ plot_volcano_ggplot <- function(file_path) {
     
     theme_minimal() +
     guides(color=guide_legend(override.aes=list(alpha=1)))
+
 }
 
 # Usage
 plot_volcano_ggplot("DGE_results1.csv")
+output_file <-plot_volcano_ggplot("DGE_results1.csv")
+
+
+
+# Save the plot as PDF
+ggsave(filename = paste0("volcano_plot_", "DGE_1", ".pdf"),
+       plot = output_file,
+       device = "pdf")
 
