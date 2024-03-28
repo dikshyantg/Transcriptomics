@@ -1,0 +1,32 @@
+# Load necessary libraries
+library(Seurat)
+library(SingleCellExperiment)
+library(SingleR)
+library(HumanPrimaryCellAtlasData) # Example reference dataset
+
+# Your existing Seurat object is named seurat_object
+
+# Step 1: Set the 'integrated' assay as the default
+DefaultAssay(seurat_object) <- 'integrated'
+
+# Step 2: Convert Seurat object to SingleCellExperiment format
+sce_data <- as.SingleCellExperiment(seurat_object)
+
+# Step 3: Choose a reference dataset for SingleR (example using HumanPrimaryCellAtlasData)
+data("HumanPrimaryCellAtlasData")
+ref_dataset <- HumanPrimaryCellAtlasData()
+
+# Step 4: Perform cell type annotation with SingleR
+annotations <- SingleR(test = sce_data, ref = ref_dataset, labels = ref_dataset$label.main)
+
+# Step 5: Examine the top few annotations to verify
+head(annotations)
+
+# (Optional) Add annotations back to the original Seurat object for further analysis
+# Assuming the cell IDs/order in sce_data and seurat_object are the same
+seurat_object$predictedCellType <- annotations$labels
+
+# (Optional) Visualization: UMAP plot colored by predicted cell types
+DimPlot(seurat_object, reduction = "umap", group.by = "predictedCellType", label = TRUE, label.size = 4)
+
+# Note: The visualization step assumes you have UMAP coordinates already calculated in your Seurat object.
